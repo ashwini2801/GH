@@ -1,0 +1,71 @@
+# Function to simulate a single memory access (read or write)
+def handle_memory_access(request):
+    # Simulate memory access latency based on request type and system characteristics
+    if request.type == "Read":
+        # Simulate read latency
+        latency = simulate_read_latency(request.address)
+    else:
+        # Simulate write latency
+        latency = simulate_write_latency(request.address)
+    
+    return latency
+
+# Function to run a single workload with optimization checks, 
+ def run_dataflow(workload):
+    total_latency = 0
+    total_bytes_transferred = 0
+    total_throttling_cycles = 0
+
+    for request in workload:
+        # Simulate memory access and calculate latency
+        latency = handle_memory_access(request)
+        total_latency += latency
+
+        # Simulate data transfer and calculate total bytes transferred
+        if request.type == "Read" or request.type == "Write":
+            total_bytes_transferred += request.data_size
+        
+        # Check for buffer overflow and adjust buffer sizes if needed
+        if get_buffer_occupancy(request.source_buffer) > 0.9:
+            increase_buffer_size(request.source_buffer)
+
+        # Check for throttling frequency and adjust operating frequency if needed
+        if get_powerlimit_threshold() == 1:
+            total_throttling_cycles += 1
+
+    # Calculate average latency
+    average_latency = total_latency / len(workload)
+
+    # Calculate bandwidth
+    total_time = len(workload)  # Assuming each request takes one time unit
+    bandwidth = total_bytes_transferred / total_time
+
+    # Check overall throttling percentage and adjust operating frequency if needed
+    throttling_percentage = total_throttling_cycles / len(workload)
+    if throttling_percentage > 0.05:
+        throttle()  # Reduce operating frequency
+
+    return average_latency, bandwidth
+
+def optimize_data_transfer( ): 
+#optimize buffer placement for faster and efficient transfers
+if(average_latency> max_allowable_latency):
+  Enable(dynamic buffer sizing) //reduces latency significantly
+#Profile and tune possible parameters for optimising system
+
+
+# Main loop with performance monitoring and optimization steps
+workload_index = 0
+
+while workload_index < len(target_workloads):
+    workload = target_workloads[workload_index]
+    average_latency, bandwidth = run_workload(workload)
+
+    # Check performance metrics and apply optimization strategies
+    if (average_latency > min_latency || bandwidth > max_bandwidth): 
+        # Adjust operating frequency or optimize data transfer mechanisms
+        optimize_data_transfer()
+
+    workload_index += 1
+
+// end of the file
